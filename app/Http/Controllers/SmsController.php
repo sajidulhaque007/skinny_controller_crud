@@ -38,6 +38,7 @@ class SmsController extends Controller
             'students' =>  $this->student,
         ]);
     }
+    
     public function update(Request $request)
     {
         Student::updateStudent($request);
