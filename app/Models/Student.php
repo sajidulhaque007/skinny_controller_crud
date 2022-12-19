@@ -12,14 +12,22 @@ class Student extends Model
     use HasFactory;
     private static $student;
     public static function addStudent($request){
-
-        self::$student                = new Student();
+        if($request->student_id){
+            self::$student = Student::find($request->student_id);
+        } else{
+            self::$student = new Student();
+        }
         self::$student->student_name  = $request->student_name;
         self::$student->phone         = $request->phone;
         self::$student->email         = $request->email;
         self::$student->dept_id       = $request->dept_id;
         self::$student->address       = $request->address;
-        self::$student->image         = self::saveImage($request);
+        if($request->image){
+            if(file_exists(self::$student->image)){
+                unlink(self::$student->image);
+            }
+            self::$student->image = self::saveImage($request);
+        }
         self::$student->save();
     }
 
@@ -30,21 +38,6 @@ class Student extends Model
         $imageUrl  = $directory.$imageName;
         $image->move($directory, $imageName);
         return $imageUrl;
-    }
-    public static function updateStudent($request){
-        self::$student               = Student::find($request->student_id);
-        self::$student->student_name = $request->student_name;
-        self::$student->phone        = $request->phone;
-        self::$student->email        = $request->email;
-        self::$student->dept_id      = $request->dept_id;
-        self::$student->address      = $request->address;
-        if($request->hasfile('image')){
-            if(self::$student->image != null){
-                unlink(self::$student->image);
-            }
-            self::$student->image = self::saveImage($request);
-        }
-        self::$student->save();
     }
 
     public function hasDept(){

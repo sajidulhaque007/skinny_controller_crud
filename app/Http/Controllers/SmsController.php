@@ -41,7 +41,7 @@ class SmsController extends Controller
     
     public function update(Request $request)
     {
-        Student::updateStudent($request);
+        Student::addStudent($request);
         return redirect(route('manage.student'));
     }
     public function delete(Request $request){

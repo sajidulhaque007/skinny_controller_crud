@@ -18,4 +18,5 @@ Route::get('manage-department',[DepartmentController::class,'manageDept'])->name
 Route::get('edit-dept/{id}',[DepartmentController::class,'edit'])->name('edit.dept');
 Route::post('update-dept',[DepartmentController::class,'update'])->name('update.dept');
 Route::post('delete-dept',[DepartmentController::class,'delete'])->name('delete.dept');
+//
 
