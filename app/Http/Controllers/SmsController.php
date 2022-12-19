@@ -46,6 +46,11 @@ class SmsController extends Controller
     }
     public function delete(Request $request){
         $this->student = Student::find($request->student_id);
+        if($this->student->image){
+            if(file_exists($this->student->image)){
+                unlink($this->student->image);
+            }
+        }
         $this->student->delete();
         return redirect(route('manage.student'));
     }
