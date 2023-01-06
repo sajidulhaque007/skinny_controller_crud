@@ -15,7 +15,11 @@ class Student extends Model
         if($request->student_id){
             self::$student = Student::find($request->student_id);
         } else{
-            self::$student = new Student();
+            try{
+                self::$student = new Student();
+            } catch(\Exception $e){
+                echo $e->getMessage(); 
+             }
         }
         self::$student->student_name  = $request->student_name;
         self::$student->phone         = $request->phone;
@@ -41,7 +45,8 @@ class Student extends Model
     }
 
     public function hasDept(){
-         return $this->belongsTo(Department::class,'dept_id','id');
+         return $this->belongsTo(Department::class,'dept_id','id');                  
+          
     }
 }
 

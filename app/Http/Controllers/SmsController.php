@@ -25,10 +25,12 @@ class SmsController extends Controller
             'departments' => $dept,
         ]);
     }
+
         public function save(Request $request){
         Student::addStudent($request);
         return redirect(route('manage.student'));
     }
+    
     public function manageStudent(){
         $this->student = DB::table('students')
             ->join('departments','students.dept_id','=','departments.id')
